@@ -27,12 +27,12 @@ class EnvironmentVariables {
 
 export function validate(config: Record<string, unknown>) {
   const validatedConfig = plainToInstance(
-    EnvironmentVariables, 
-    config,
+    EnvironmentVariables,
+    config
   );
 
   const errors = validateSync(
-    validatedConfig, 
+    validatedConfig,
     { skipMissingProperties: false }
   );
 
