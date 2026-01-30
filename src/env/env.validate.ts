@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsPort, validateSync } from "class-validator";
 import { plainToInstance } from "class-transformer";
 
-class EnvironmentVariables {
+export class EnvironmentVariables {
   @IsNotEmpty()
   POSTGRES_HOST: string;
 
