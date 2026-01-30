@@ -3,6 +3,9 @@ import { plainToInstance } from "class-transformer";
 
 export class EnvironmentVariables {
   @IsNotEmpty()
+  JWT_SECRET: string;
+
+  @IsNotEmpty()
   POSTGRES_HOST: string;
 
   @IsPort()
