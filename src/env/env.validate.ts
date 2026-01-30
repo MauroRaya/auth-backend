@@ -1,9 +1,5 @@
+import { IsNotEmpty, IsPort, validateSync } from "class-validator";
 import { plainToInstance } from "class-transformer";
-import {
-  IsNotEmpty,
-  IsPort,
-  validateSync
-} from "class-validator";
 
 class EnvironmentVariables {
   @IsNotEmpty()
