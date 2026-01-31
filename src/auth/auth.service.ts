@@ -20,7 +20,7 @@ export class AuthService {
   async signUp(email: string, password: string) {
     const user = await this.usersRepository.findOneBy({ email });
     if (user) {
-      throw new ConflictException();
+      throw new ConflictException('Email already in use');
     }
 
     const salt = await bcrypt.genSalt();
