@@ -12,11 +12,11 @@ import { EnvService } from 'src/env/env.service';
     JwtModule.registerAsync({
       inject: [EnvService],
       useFactory: (envService: EnvService) => ({
-        secret: envService.get<string>('JWT_SECRET')
-      })
-    })
+        secret: envService.get<string>('JWT_SECRET'),
+      }),
+    }),
   ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class AuthModule {}

@@ -20,5 +20,5 @@ export const AppDataSource = new DataSource({
   entities: [User],
   migrations: ['src/database/migrations/*-migration'],
   migrationsRun: false,
-  logging: true
+  logging: true,
 });

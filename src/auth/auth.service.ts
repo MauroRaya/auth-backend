@@ -1,7 +1,7 @@
-import { 
-  ConflictException, 
-  Injectable, 
-  UnauthorizedException 
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
@@ -14,7 +14,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async signUp(email: string, password: string) {
@@ -43,7 +43,7 @@ export class AuthService {
     const payload = { sub: user.id };
 
     return {
-      access_token: await this.jwtService.signAsync(payload)
-    }
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }

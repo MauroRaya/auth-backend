@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsPort, validateSync } from "class-validator";
-import { plainToInstance } from "class-transformer";
+import { IsNotEmpty, IsPort, validateSync } from 'class-validator';
+import { plainToInstance } from 'class-transformer';
 
 export class EnvironmentVariables {
   @IsNotEmpty()
@@ -25,15 +25,11 @@ export class EnvironmentVariables {
 }
 
 export function validate(config: Record<string, unknown>) {
-  const validatedConfig = plainToInstance(
-    EnvironmentVariables,
-    config
-  );
+  const validatedConfig = plainToInstance(EnvironmentVariables, config);
 
-  const errors = validateSync(
-    validatedConfig,
-    { skipMissingProperties: false }
-  );
+  const errors = validateSync(validatedConfig, {
+    skipMissingProperties: false,
+  });
 
   if (errors.length > 0) {
     throw new Error(errors.toString());

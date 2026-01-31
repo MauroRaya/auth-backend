@@ -10,13 +10,13 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validate
+      validate,
     }),
     EnvModule,
     TypeOrmModule.forRootAsync({
-      useFactory: async () => AppDataSource.options
+      useFactory: async () => AppDataSource.options,
     }),
-    AuthModule
-  ]
+    AuthModule,
+  ],
 })
 export class AppModule {}
