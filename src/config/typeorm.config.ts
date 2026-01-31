@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from 'src/env/env.validate';
 import { EnvService } from 'src/env/env.service';
 import { config } from 'dotenv';
+import { User } from 'src/user/user.entity';
 config();
 
 const configService = new ConfigService<EnvironmentVariables, true>();
@@ -16,8 +17,8 @@ export const AppDataSource = new DataSource({
   password: envService.get<string>('POSTGRES_PASSWORD'),
   database: envService.get<string>('POSTGRES_DB'),
   synchronize: false,
-  entities: ['**/*.entity.ts'],
-  migrations: ['src/database/migrations/*-migration.ts'],
+  entities: [User],
+  migrations: ['src/database/migrations/*-migration'],
   migrationsRun: false,
   logging: true
 });
