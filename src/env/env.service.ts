@@ -9,6 +9,6 @@ export class EnvService {
   ) {}
 
   get<T>(key: keyof EnvironmentVariables) {
-    return this.configService.get<T>(key, { infer: true });
+    return this.configService.get<T>(key);
   }
 }
