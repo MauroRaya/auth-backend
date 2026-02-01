@@ -1,10 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheck, HealthCheckService, TypeOrmHealthIndicator } from '@nestjs/terminus';
+import { HealthCheck, HealthCheckService, MemoryHealthIndicator, TypeOrmHealthIndicator } from '@nestjs/terminus';
 
 @Controller('health')
 export class HealthController {
   constructor(
     private readonly health: HealthCheckService,
+    private readonly memory: MemoryHealthIndicator,
     private readonly db: TypeOrmHealthIndicator,
   ) {}
 
@@ -12,6 +13,7 @@ export class HealthController {
   @HealthCheck()
   async check() {
     return await this.health.check([
+      () => this.memory.checkHeap('memory heap', 150 * 1024 * 1024),
       () => this.db.pingCheck('database'),
     ]);
   }
