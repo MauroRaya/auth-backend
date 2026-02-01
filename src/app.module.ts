@@ -15,7 +15,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     EnvModule,
     TypeOrmModule.forRootAsync({
-      useFactory: async () => AppDataSource.options,
+      useFactory: () => AppDataSource.options,
     }),
     HealthModule,
     AuthModule,
