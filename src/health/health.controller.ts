@@ -13,7 +13,7 @@ export class HealthController {
   @HealthCheck()
   async check() {
     return await this.health.check([
-      () => this.memory.checkHeap('memory heap', 150 * 1024 * 1024),
+      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
       () => this.db.pingCheck('database'),
     ]);
   }
