@@ -21,3 +21,8 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 * [NestJS CLI](https://docs.nestjs.com/cli/overview)
 * [Docker](https://docs.docker.com/get-started/docker-overview/)
 * [Docker compose](https://docs.docker.com/compose/)
+
+## ✍️ Convenções
+Esse repositório adota as especificações de:
+* [Branches convencionais](https://conventional-branch.github.io/pt-br/)
+* [Commits convencionais](https://www.conventionalcommits.org/pt-br/v1.0.0/)
