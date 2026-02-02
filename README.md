@@ -13,3 +13,10 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 * [Swagger](https://swagger.io/)
 * [Jest](https://jestjs.io/)
 * [Prettier](https://prettier.io/)
+
+## 📋 Pré-requisitos
+* [Git](https://git-scm.com/)
+* [Node.js](https://nodejs.org/pt-br)
+* [NestJS CLI](https://docs.nestjs.com/cli/overview)
+* [Docker](https://docs.docker.com/get-started/docker-overview/)
+* [Docker compose](https://docs.docker.com/compose/)
