@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { EnvironmentVariables } from 'src/env/env.validate';
+import { EnvironmentVariables } from 'src/env/env';
 import { EnvService } from 'src/env/env.service';
 import { config } from 'dotenv';
 import { User } from 'src/user/user.entity';
