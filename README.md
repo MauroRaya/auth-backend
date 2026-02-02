@@ -121,3 +121,22 @@ npm start
 
 > **IMPORTANTE**  
 > Não esqueça de executar `docker compose down` após finalizar a aplicação.
+
+## 🤝 Como contribuir
+
+### 1. Clone o repositório.
+
+```bash
+git checkout https://github.com/MauroRaya/auth-backend -b <nome-da-minha-branch>
+```
+
+### 2. Instale as dependências.
+```bash
+npm i
+```
+
+### 3. Adicione dependências caso necessário.
+### 4. Adicione uma funcionalidade, corrija um bug ou refatore um trecho de código.
+### 5. Escreva e atualize testes conforme necessário.
+### 6. Atualize a documentação caso necessário.
+### 7. Abra um pull request no GitHub.
