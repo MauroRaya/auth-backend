@@ -4,6 +4,7 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 ## 📌 Tabela de conteúdo
 * [Tecnologias](#-tecnologias)
 * [Pré-requisitos](#-pré-requisitos)
+* [Convenções](#️-convenções)
 
 ## 🚀 Tecnologias
 * [TypeScript](https://www.typescriptlang.org/)
