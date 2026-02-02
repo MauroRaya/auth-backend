@@ -1,6 +1,9 @@
 # API de autenticação
 API responsável por autenticação de usuários, construída com TypeScript e NestJS.
 
+## 📌 Tabela de conteúdo
+* [Tecnologias](#-tecnologias)
+
 ## 🚀 Tecnologias
 * [TypeScript](https://www.typescriptlang.org/)
 * [NestJS](https://nestjs.com/)
