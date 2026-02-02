@@ -69,3 +69,54 @@ export class ExampleService {
   }
 }
 ```
+
+## ⚙️ Como executar o projeto
+
+### 1. Clone o repositório.
+```bash
+git clone https://github.com/MauroRaya/auth-backend -b dev
+```
+
+### 2. Configure o arquivo `.env` na raiz do projeto.
+```bash
+# Apenas um exemplo, arquivo sujeito a mudanças
+
+JWT_SECRET=your-jwt-secret
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your-postgres-password
+POSTGRES_DB=postgres
+PORT=3000
+```
+
+> **IMPORTANTE**  
+> Para descobrir as variáveis de ambiente necessárias para execução do projeto, visite o arquivo `env.ts`
+
+```bash
+.
+└── src
+    └── env
+        ├── env.module.ts
+        ├── env.service.ts
+        ├── env.ts
+        └── env.validate.ts
+```
+
+### 3. Instale as dependências.
+```bash
+npm i
+```
+
+### 4. Suba o banco de dados localmente.
+```bash
+docker compose up -d
+```
+
+### 5. Inicie a aplicação.
+```bash
+npm start
+```
+
+> **IMPORTANTE**  
+> Não esqueça de executar `docker compose down` após finalizar a aplicação.
