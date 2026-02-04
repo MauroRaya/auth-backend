@@ -1,6 +1,13 @@
-import { IsNotEmpty, IsPort } from 'class-validator';
+import { IsIn, IsNotEmpty, IsPort } from 'class-validator';
+
+export const environments = ['development', 'production'] as const;
+export type Environment = (typeof environments)[number];
 
 export class EnvironmentVariables {
+  @IsNotEmpty()
+  @IsIn(environments)
+  NODE_ENV: Environment;
+
   @IsNotEmpty()
   JWT_SECRET: string;
 
