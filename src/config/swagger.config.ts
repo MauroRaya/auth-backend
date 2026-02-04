@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function configureSwagger(app: INestApplication) {
@@ -11,4 +11,7 @@ export function configureSwagger(app: INestApplication) {
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, documentFactory);
+
+  const logger = new Logger('Swagger');
+  logger.log('Mapped {/swagger, GET} route');
 }
