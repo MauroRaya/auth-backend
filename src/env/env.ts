@@ -1,6 +1,6 @@
 import { IsIn, IsNotEmpty, IsPort } from 'class-validator';
 
-export const environments = ['development', 'production'] as const;
+export const environments = ['development', 'test', 'production'] as const;
 export type Environment = (typeof environments)[number];
 
 export class EnvironmentVariables {
