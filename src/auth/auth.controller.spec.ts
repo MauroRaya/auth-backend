@@ -26,8 +26,8 @@ describe('AuthController', () => {
         JwtService,
         {
           provide: getRepositoryToken(User),
-          useValue: usersRepositoryMock
-        }
+          useValue: usersRepositoryMock,
+        },
       ],
     }).compile();
 
@@ -72,13 +72,15 @@ describe('AuthController', () => {
       password: '12345678',
     };
 
-    jest
-      .spyOn(usersRepositoryMock, 'findOneBy')
-      .mockResolvedValue(null);
+    const { email } = dto;
 
-    jest
-      .spyOn(usersRepositoryMock, 'save')
-      .mockResolvedValue({ id: 1, email: dto.email, salt: 'salt', hash: 'hash' });
+    usersRepositoryMock.findOneBy.mockResolvedValue(null);
+    usersRepositoryMock.save.mockResolvedValue({
+      id: 1,
+      email,
+      salt: 'salt',
+      hash: 'hash',
+    });
 
     await request(app.getHttpServer())
       .post('/auth/sign-up')
