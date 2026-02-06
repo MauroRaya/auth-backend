@@ -49,7 +49,7 @@ describe('AuthService', () => {
     expect(user).toBeDefined();
   });
 
-  it('sign up with unavailable email expect exception', () => {
+  it('sign up with unavailable email expect exception', async () => {
     const email = 'johndoe@email.com';
     const password = 'johndoe123';
 
@@ -60,18 +60,18 @@ describe('AuthService', () => {
       hash: 'hash',
     });
 
-    void expect(authService.signUp(email, password)).rejects.toThrow(
+    await expect(authService.signUp(email, password)).rejects.toThrow(
       ConflictException,
     );
   });
 
-  it('sign in with non existing account expect exception', () => {
+  it('sign in with non existing account expect exception', async () => {
     const email = 'johndoe@email.com';
     const password = 'johndoe123';
 
     usersRepositoryMock.findOneBy.mockResolvedValue(null);
 
-    void expect(authService.signIn(email, password)).rejects.toThrow(
+    await expect(authService.signIn(email, password)).rejects.toThrow(
       UnauthorizedException,
     );
   });
