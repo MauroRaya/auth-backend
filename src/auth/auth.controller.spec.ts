@@ -54,7 +54,7 @@ describe('AuthController', () => {
       .expect(400);
   });
 
-  it('sign up with invalid password should 400', async () => {
+  it('sign up using a password with less than 8 characters should 400', async () => {
     const dto: SignUpDTO = {
       email: 'johndoe@email.com',
       password: '1234567',
