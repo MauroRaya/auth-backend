@@ -9,6 +9,10 @@ import * as bcrypt from 'bcrypt';
 describe('AuthService', () => {
   let authService: AuthService;
 
+  const jwtServiceMock = {
+    signAsync: jest.fn(),
+  };
+
   const usersRepositoryMock = {
     findOneBy: jest.fn(),
     save: jest.fn(),
@@ -18,7 +22,10 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        JwtService,
+        {
+          provide: JwtService,
+          useValue: jwtServiceMock,
+        },
         {
           provide: getRepositoryToken(User),
           useValue: usersRepositoryMock,
@@ -90,11 +97,14 @@ describe('AuthService', () => {
       hash,
     });
 
-    const isPasswordValid = await bcrypt.compare(`${password}!`, hash);
-    expect(isPasswordValid).toBeFalsy();
+    await expect(authService.signIn(email, `${password}!`)).rejects.toThrow(
+      UnauthorizedException,
+    );
+
+    expect(jwtServiceMock.signAsync).not.toHaveBeenCalled();
   });
 
-  it('sign in with matching password expect truthy', async () => {
+  it('sign in with matching password expect access token', async () => {
     const email = 'johndoe@email.com';
     const password = 'johndoe123';
 
@@ -108,7 +118,11 @@ describe('AuthService', () => {
       hash,
     });
 
-    const isPasswordValid = await bcrypt.compare(password, hash);
-    expect(isPasswordValid).toBeTruthy();
+    jwtServiceMock.signAsync.mockResolvedValue('access_token');
+
+    const { access_token } = await authService.signIn(email, password);
+    expect(access_token).toBe('access_token');
+
+    expect(jwtServiceMock.signAsync).toHaveBeenCalled();
   });
 });
