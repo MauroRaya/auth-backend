@@ -6,10 +6,12 @@ describe('EnvService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{
-        provide: EnvService,
-        useValue: {}
-      }],
+      providers: [
+        {
+          provide: EnvService,
+          useValue: {},
+        },
+      ],
     }).compile();
 
     service = module.get<EnvService>(EnvService);
