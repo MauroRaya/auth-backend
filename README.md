@@ -57,7 +57,7 @@ PORT=3000
 
 ### 4. Instale as dependências.
 ```bash
-npm i
+npm install
 ```
 
 ### 5. Suba o banco de dados localmente.
@@ -114,7 +114,7 @@ export class UsuariosService {
 
 Uma prática comum é realizar a validação durante a entrada de dados.
 
-##### 1. Configurar a validação do NestJS e class-validator
+##### 1. Configurar a validação do NestJS e class-validator.
 
 ```typescript
 // src/main.ts
@@ -166,21 +166,77 @@ export class UsuarioController {
 }
 ```
 
+### [Lista longa de parâmetros](https://refactoring.guru/pt-br/smells/long-parameter-list)
+
+É uma tendência que **dificulta a leitura e manutenção do código**.
+
+#### Exemplo:
+
+```typescript
+function calcularPreco(
+  valor: number,
+  desconto: number,
+  imposto: number,
+  incluirEntrega: boolean
+) {}
+```
+
+```typescript
+// O que esses valores significam?
+calcularPreco(100, 10, 0.2, true);
+calcularPreco(20, 30, 0.3, false);
+```
+
+#### Tratamento:
+
+##### 1. Criar uma interface.
+
+```typescript
+interface CalcularPrecoDto {
+  valor: number;
+  desconto: number;
+  imposto: number;
+  incluirEntrega: boolean;
+}
+```
+
+##### 2. Refatorar o parâmetro da função.
+
+```typescript
+function calcularPreco(dto: CalcularPrecoDto) {}
+```
+
+```typescript
+calcularPreco({
+  valor: 100, 
+  desconto: 10, 
+  imposto: 0.2, 
+  incluirEntrega: true
+});
+```
+
 ## 🤝 Como contribuir
 
 ### 1. Clone o repositório.
 
 ```bash
-git checkout https://github.com/MauroRaya/auth-backend -b <nome-da-minha-branch>
+git clone https://github.com/MauroRaya/auth-backend
 ```
 
-### 2. Instale as dependências.
+### 2. Crie uma branch nova.
+
 ```bash
-npm i
+git checkout -b <nome-da-minha-branch>
 ```
 
-### 3. Adicione dependências caso necessário.
-### 4. Adicione uma funcionalidade, corrija um bug ou refatore um trecho de código.
-### 5. Escreva e atualize testes conforme necessário.
-### 6. Atualize a documentação caso necessário.
-### 7. Abra um pull request no GitHub.
+### 3. Instale as dependências.
+
+```bash
+npm install
+```
+
+### 4. Adicione dependências caso necessário.
+### 5. Adicione uma funcionalidade, corrija um bug ou refatore um trecho de código.
+### 6. Escreva e atualize testes conforme necessário.
+### 7. Atualize a documentação caso necessário.
+### 8. Abra um pull request no GitHub.
