@@ -5,8 +5,6 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 * [Tecnologias](#-tecnologias)
 * [Pré-requisitos](#-pré-requisitos)
 * [Convenções](#️-convenções)
-* [Arquitetura](#️-arquitetura)
-  * [Variáveis de ambiente](#variáveis-de-ambiente)
 * [Como executar o projeto](#️-como-executar-o-projeto)
 * [Como contribuir](#-como-contribuir)
 
@@ -31,46 +29,6 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 Esse repositório adota as especificações de:
 * [Branches convencionais](https://conventional-branch.github.io/pt-br/)
 * [Commits convencionais](https://www.conventionalcommits.org/pt-br/v1.0.0/)
-
-## 🏗️ Arquitetura
-
-### Variáveis de ambiente
-
-#### Problema
-O `ConfigService` padrão permite **acessar qualquer variável de ambiente, mesmo que ela não exista**, o que pode causar **erros em tempo de execução**.
-
-#### Solução
-O `EnvService` atua como um *wrapper* tipado do `ConfigService`, **garantindo segurança em tempo de compilação**.
-
-#### Exemplo de uso
-```typescript
-// src/env/env.ts
-import { IsNotEmpty } from 'class-validator';
-
-export class EnvironmentVariables {
-  @IsNotEmpty()
-  FOO: string;
-}
-```
-
-```typescript
-// src/example/example.service.ts
-import { EnvService } from 'src/env/env.service';
-
-@Injectable()
-export class ExampleService {
-  constructor(private readonly envService: EnvService) {}
-
-  success(): string {
-    return this.envService.get<string>('FOO');
-  }
-
-  failure(): string {
-    // Erro durante compilação, 'BAR' não é uma chave de EnvironmentVariables
-    return this.envService.get<string>('BAR');
-  }
-}
-```
 
 ## ⚙️ Como executar o projeto
 
