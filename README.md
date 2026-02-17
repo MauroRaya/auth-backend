@@ -6,6 +6,7 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 * [Pré-requisitos](#-pré-requisitos)
 * [Convenções](#️-convenções)
 * [Como executar o projeto](#️-como-executar-o-projeto)
+* [Code smells](#️-code-smells)
 * [Como contribuir](#-como-contribuir)
 
 ## 🚀 Tecnologias
@@ -81,6 +82,11 @@ npm start
 
 > **IMPORTANTE**  
 > Não esqueça de executar `docker compose down` após finalizar a aplicação.
+
+## 🗑️ [Code smells](https://pt.wikipedia.org/wiki/Code_smell)
+
+Um code smell é um indício de um **possível problema no design do código**, mesmo que ele funcione.  
+Abaixo estão alguns exemplos comuns
 
 ## 🤝 Como contribuir
 
