@@ -16,6 +16,7 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 * [class-transformer](https://github.com/typestack/class-transformer)
 * [Swagger](https://swagger.io/)
 * [Jest](https://jestjs.io/)
+* [ESLint](https://eslint.org/)
 * [Prettier](https://prettier.io/)
 
 ## 📋 Pré-requisitos
