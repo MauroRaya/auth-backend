@@ -9,3 +9,15 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - ./postgresql/:/var/lib/postgresql/data/
+
+  rabbitmq-auth:
+    image: rabbitmq:4.2.4-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq/lib/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq/
