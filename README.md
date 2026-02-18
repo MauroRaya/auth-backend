@@ -6,6 +6,7 @@ API responsável por autenticação de usuários, construída com TypeScript e N
 * [Pré-requisitos](#-pré-requisitos)
 * [Convenções](#️-convenções)
 * [Como executar o projeto](#️-como-executar-o-projeto)
+* [Padrões](#-padrões)
 * [Code smells](#️-code-smells)
 * [Como contribuir](#-como-contribuir)
 
@@ -72,6 +73,114 @@ docker compose up -d
 npm start
 ```
 
+## 📋 Padrões
+
+### Padrão de repositório
+
+O objetivo desse padrão é **encapsular e abstrair o acesso à camada de dados, permitindo a substituição fácil das implementações**, seja entre diferentes bancos de dados ou até mesmo uma versão em memória.
+
+#### 1. Crie uma interface.
+
+```typescript
+export interface UsuarioRepository {
+  get(): Promise<Usuario[]>;
+}
+```
+
+#### 2. Crie uma ou mais implementações.
+
+##### Exemplo TypeORM:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+
+@Injectable()
+export class TypeOrmUsuarioRepository implements UsuarioRepository {
+  constructor(private readonly repository: Repository<User>) {}
+
+  async get(): Promise<Usuario[]> {
+    return await this.repository.find();
+  }
+}
+```
+
+##### Exemplo em memória:
+
+```typescript
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class EmMemoriaUsuarioRepository implements UsuarioRepository {
+  private readonly usuarios: Usuario[] = [];
+
+  async get(): Promise<Usuario[]> {
+    return this.usuarios;
+  }
+}
+```
+
+#### 3. Configure a implementação desejada.
+
+##### Exemplo TypeORM:
+
+```typescript
+import { Module } from '@nestjs/common';
+
+export const USUARIO_REPOSITORY = 'USUARIO_REPOSITORY';
+
+@Module({
+  providers: [
+    {
+      provide: USUARIO_REPOSITORY,
+      useFactory: (repository: Repository<User>) => {
+        return new TypeOrmUsuarioRepository(repository);
+      },
+      inject: [getRepositoryToken(User)],
+    },
+  ],
+})
+export class UsuarioModule {}
+```
+
+##### Exemplo em memória:
+
+```typescript
+import { Module } from '@nestjs/common';
+
+export const USUARIO_REPOSITORY = 'USUARIO_REPOSITORY';
+
+@Module({
+  providers: [
+    {
+      provide: USUARIO_REPOSITORY,
+      useFactory: () => new EmMemoriaUsuarioRepository();
+    },
+  ],
+})
+export class UsuarioModule {}
+```
+
+#### 4. Utilize o repositório através do contrato.
+
+```typescript
+import { Inject, Injectable } from '@nestjs/common';
+
+@Injectable()
+export class UsuarioService {
+  constructor(
+    @Inject('USUARIO_REPOSITORY')
+    private readonly usuariosRepository: UsuarioRepository,
+  ) {}
+
+  async get() {
+    return await this.usuariosRepository.get();
+  }
+}
+```
+
+Dessa forma, o código **permanece igual independente da implementação** que ele utiliza.
+
 ## 🗑️ [Code smells](https://pt.wikipedia.org/wiki/Code_smell)
 
 É um indício de um **possível problema no design do código**, mesmo que ele funcione.  
@@ -114,7 +223,7 @@ export class UsuariosService {
 
 Uma prática comum é realizar a validação durante a entrada de dados.
 
-##### 1. Configurar a validação do NestJS e class-validator.
+##### 1. Configure a validação do NestJS e class-validator.
 
 ```typescript
 // src/main.ts
@@ -131,7 +240,7 @@ async function bootstrap() {
 void bootstrap();
 ```
 
-##### 2. Criar uma classe utilizando os decoradores do class-validator.
+##### 2. Crie uma classe utilizando os decoradores do class-validator.
 
 ```typescript
 import { IsInt, Min } from 'class-validator';
@@ -145,7 +254,7 @@ export class CriarUsuarioDto {
 }
 ```
 
-##### 3. Refatorar o parâmetro da função.
+##### 3. Refatore o parâmetro da função.
 
 ```typescript
 import { Body, Controller, Post, Put } from '@nestjs/common';
@@ -189,7 +298,7 @@ calcularPreco(20, 30, 0.3, false);
 
 #### Tratamento:
 
-##### 1. Criar uma interface.
+##### 1. Crie uma interface.
 
 ```typescript
 interface CalcularPrecoDto {
@@ -200,7 +309,7 @@ interface CalcularPrecoDto {
 }
 ```
 
-##### 2. Refatorar o parâmetro da função.
+##### 2. Refatore o parâmetro da função.
 
 ```typescript
 function calcularPreco(dto: CalcularPrecoDto) {}
