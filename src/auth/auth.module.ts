@@ -8,8 +8,6 @@ import { Repository } from 'typeorm';
 import { TypeOrmUserRepository } from 'src/database/repositories/typeorm-user.repository';
 import { AuthService } from './auth.service';
 
-export const USER_REPOSITORY = 'USER_REPOSITORY';
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -23,7 +21,7 @@ export const USER_REPOSITORY = 'USER_REPOSITORY';
   controllers: [AuthController],
   providers: [
     {
-      provide: USER_REPOSITORY,
+      provide: 'USER_REPOSITORY',
       useFactory: (repository: Repository<User>) => {
         return new TypeOrmUserRepository(repository);
       },
