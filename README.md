@@ -126,6 +126,7 @@ export class EmMemoriaUsuarioRepository implements UsuarioRepository {
 
 ```typescript
 import { Module } from '@nestjs/common';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 export const USUARIO_REPOSITORY = 'USUARIO_REPOSITORY';
 
