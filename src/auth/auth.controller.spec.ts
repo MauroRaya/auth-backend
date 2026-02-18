@@ -4,8 +4,6 @@ import { App } from 'supertest/types';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from 'src/user/user.entity';
 import { SignUpDTO } from './dto/sign-up.dto';
 import request from 'supertest';
 
@@ -14,7 +12,7 @@ describe('AuthController', () => {
   let controller: AuthController;
 
   const usersRepositoryMock = {
-    findOneBy: jest.fn(),
+    findOneByEmail: jest.fn(),
     save: jest.fn(),
   };
 
@@ -25,7 +23,7 @@ describe('AuthController', () => {
         AuthService,
         JwtService,
         {
-          provide: getRepositoryToken(User),
+          provide: 'USER_REPOSITORY',
           useValue: usersRepositoryMock,
         },
       ],
@@ -74,7 +72,7 @@ describe('AuthController', () => {
 
     const { email } = dto;
 
-    usersRepositoryMock.findOneBy.mockResolvedValue(null);
+    usersRepositoryMock.findOneByEmail.mockResolvedValue(null);
     usersRepositoryMock.save.mockResolvedValue({
       id: 1,
       email,
