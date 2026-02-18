@@ -100,7 +100,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class TypeOrmUsuarioRepository implements UsuarioRepository {
-  constructor(private readonly repository: Repository<User>) {}
+  constructor(private readonly repository: Repository<Usuario>) {}
 
   async get(): Promise<Usuario[]> {
     return await this.repository.find();
@@ -137,10 +137,10 @@ export const USUARIO_REPOSITORY = 'USUARIO_REPOSITORY';
   providers: [
     {
       provide: USUARIO_REPOSITORY,
-      useFactory: (repository: Repository<User>) => {
+      useFactory: (repository: Repository<Usuario>) => {
         return new TypeOrmUsuarioRepository(repository);
       },
-      inject: [getRepositoryToken(User)],
+      inject: [getRepositoryToken(Usuario)],
     },
   ],
 })
