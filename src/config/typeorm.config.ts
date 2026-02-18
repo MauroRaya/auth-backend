@@ -4,6 +4,7 @@ import { EnvironmentVariables } from 'src/env/env';
 import { EnvService } from 'src/env/env.service';
 import { config } from 'dotenv';
 import { User } from 'src/user/user.entity';
+import path from 'path';
 config();
 
 const configService = new ConfigService<EnvironmentVariables, true>();
@@ -18,7 +19,9 @@ export const AppDataSource = new DataSource({
   database: envService.get<string>('POSTGRES_DB'),
   synchronize: false,
   entities: [User],
-  migrations: ['src/database/migrations/*-migration'],
+  migrations: [
+    path.join(__dirname, '/../database/migrations/*-migration.{ts,js}'),
+  ],
   migrationsRun: false,
   logging: true,
 });
