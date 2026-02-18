@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from 'src/user/user.entity';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -14,7 +12,7 @@ describe('AuthService', () => {
   };
 
   const usersRepositoryMock = {
-    findOneBy: jest.fn(),
+    findOneByEmail: jest.fn(),
     save: jest.fn(),
   };
 
@@ -27,7 +25,7 @@ describe('AuthService', () => {
           useValue: jwtServiceMock,
         },
         {
-          provide: getRepositoryToken(User),
+          provide: 'USER_REPOSITORY',
           useValue: usersRepositoryMock,
         },
       ],
@@ -44,7 +42,7 @@ describe('AuthService', () => {
     const email = 'johndoe@email.com';
     const password = 'johndoe123';
 
-    usersRepositoryMock.findOneBy.mockResolvedValue(null);
+    usersRepositoryMock.findOneByEmail.mockResolvedValue(null);
     usersRepositoryMock.save.mockResolvedValue({
       id: 1,
       email,
@@ -60,7 +58,7 @@ describe('AuthService', () => {
     const email = 'johndoe@email.com';
     const password = 'johndoe123';
 
-    usersRepositoryMock.findOneBy.mockResolvedValue({
+    usersRepositoryMock.findOneByEmail.mockResolvedValue({
       id: 1,
       email,
       salt: 'salt',
@@ -76,7 +74,7 @@ describe('AuthService', () => {
     const email = 'johndoe@email.com';
     const password = 'johndoe123';
 
-    usersRepositoryMock.findOneBy.mockResolvedValue(null);
+    usersRepositoryMock.findOneByEmail.mockResolvedValue(null);
 
     await expect(authService.signIn(email, password)).rejects.toThrow(
       UnauthorizedException,
@@ -90,7 +88,7 @@ describe('AuthService', () => {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(password, salt);
 
-    usersRepositoryMock.findOneBy.mockResolvedValue({
+    usersRepositoryMock.findOneByEmail.mockResolvedValue({
       id: 1,
       email,
       salt,
@@ -111,7 +109,7 @@ describe('AuthService', () => {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(password, salt);
 
-    usersRepositoryMock.findOneBy.mockResolvedValue({
+    usersRepositoryMock.findOneByEmail.mockResolvedValue({
       id: 1,
       email,
       salt,
