@@ -14,6 +14,6 @@ export class User {
   @Column()
   hash: string;
 
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 }
