@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
+import { JwtModule } from '@nestjs/jwt';
 import { EnvService } from 'src/env/env.service';
+import { AuthController } from './auth.controller';
+import { Repository } from 'typeorm';
+import { TypeOrmUserRepository } from 'src/database/repositories/typeorm-user.repository';
+import { AuthService } from './auth.service';
+
+export const USER_REPOSITORY = 'USER_REPOSITORY';
 
 @Module({
   imports: [
@@ -17,6 +21,15 @@ import { EnvService } from 'src/env/env.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    {
+      provide: USER_REPOSITORY,
+      useFactory: (repository: Repository<User>) => {
+        return new TypeOrmUserRepository(repository);
+      },
+      inject: [getRepositoryToken(User)],
+    },
+    AuthService,
+  ],
 })
 export class AuthModule {}

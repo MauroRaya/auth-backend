@@ -1,24 +1,23 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/user/user.entity';
-import { Repository } from 'typeorm';
+import type { UserRepository } from 'src/user/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
+    @Inject('USER_REPOSITORY')
+    private readonly usersRepository: UserRepository,
     private readonly jwtService: JwtService,
   ) {}
 
   async signUp(email: string, password: string) {
-    const user = await this.usersRepository.findOneBy({ email });
+    const user = await this.usersRepository.findOneByEmail(email);
     if (user) {
       throw new ConflictException('Email already in use');
     }
@@ -30,7 +29,7 @@ export class AuthService {
   }
 
   async signIn(email: string, password: string) {
-    const user = await this.usersRepository.findOneBy({ email });
+    const user = await this.usersRepository.findOneByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
