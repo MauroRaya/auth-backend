@@ -1,24 +1,18 @@
 import { Module } from '@nestjs/common';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/user/user.entity';
-import { JwtModule } from '@nestjs/jwt';
-import { EnvService } from 'src/env/env.service';
-import { AuthController } from './auth.controller';
+import { BullModule } from '@nestjs/bullmq';
 import { Repository } from 'typeorm';
+import { User } from './user.entity';
 import { TypeOrmUserRepository } from 'src/database/repositories/typeorm-user.repository';
-import { AuthService } from './auth.service';
+import { UserConsumer } from './user.consumer';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
-    JwtModule.registerAsync({
-      inject: [EnvService],
-      useFactory: (envService: EnvService) => ({
-        secret: envService.get<string>('JWT_SECRET'),
-      }),
-    }),
+    BullModule.registerQueue({ name: 'user' }),
   ],
-  controllers: [AuthController],
   providers: [
     {
       provide: 'USER_REPOSITORY',
@@ -27,7 +21,9 @@ import { AuthService } from './auth.service';
       },
       inject: [getRepositoryToken(User)],
     },
-    AuthService,
+    UserConsumer,
+    UserService,
   ],
+  controllers: [UserController],
 })
-export class AuthModule {}
+export class UserModule {}

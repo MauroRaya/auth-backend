@@ -9,11 +9,13 @@ export class AuthController {
 
   @Post('sign-up')
   async signUp(@Body() dto: SignUpDTO): Promise<any> {
-    return await this.authService.signUp(dto.email, dto.password);
+    const { email, password } = dto;
+    return await this.authService.signUp(email, password);
   }
 
   @Post('sign-in')
   async signIn(@Body() dto: SignInDTO): Promise<any> {
-    return await this.authService.signIn(dto.email, dto.password);
+    const { email, password } = dto;
+    return await this.authService.signIn(email, password);
   }
 }

@@ -11,6 +11,10 @@ export class TypeOrmUserRepository implements UserRepository {
     return await this.repository.findOneBy({ email });
   }
 
+  async updateAll(user: Partial<User>) {
+    await this.repository.updateAll(user);
+  }
+
   async save(user: Partial<User>): Promise<User> {
     return await this.repository.save(user);
   }

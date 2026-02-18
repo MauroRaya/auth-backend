@@ -47,12 +47,15 @@ git checkout development
 
 ### 3. Configure o arquivo `.env` na raiz do projeto.
 ```bash
+NODE_ENV=development
 JWT_SECRET=your-jwt-secret
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your-postgres-password
 POSTGRES_DB=postgres
+REDIS_HOST=localhost
+REDIS_PORT=6379
 PORT=3000
 ```
 
@@ -97,7 +100,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class TypeOrmUsuarioRepository implements UsuarioRepository {
-  constructor(private readonly repository: Repository<User>) {}
+  constructor(private readonly repository: Repository<Usuario>) {}
 
   async get(): Promise<Usuario[]> {
     return await this.repository.find();
@@ -134,10 +137,10 @@ export const USUARIO_REPOSITORY = 'USUARIO_REPOSITORY';
   providers: [
     {
       provide: USUARIO_REPOSITORY,
-      useFactory: (repository: Repository<User>) => {
+      useFactory: (repository: Repository<Usuario>) => {
         return new TypeOrmUsuarioRepository(repository);
       },
-      inject: [getRepositoryToken(User)],
+      inject: [getRepositoryToken(Usuario)],
     },
   ],
 })
