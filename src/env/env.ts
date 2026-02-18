@@ -26,6 +26,12 @@ export class EnvironmentVariables {
   @IsNotEmpty()
   POSTGRES_DB: string;
 
+  @IsNotEmpty()
+  REDIS_HOST: string;
+
+  @IsPort()
+  REDIS_PORT: number;
+
   @IsPort()
   PORT: number;
 }

@@ -47,12 +47,15 @@ git checkout development
 
 ### 3. Configure o arquivo `.env` na raiz do projeto.
 ```bash
+NODE_ENV=development
 JWT_SECRET=your-jwt-secret
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your-postgres-password
 POSTGRES_DB=postgres
+REDIS_HOST=localhost
+REDIS_PORT=6379
 PORT=3000
 ```
 
