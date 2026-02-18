@@ -8,7 +8,7 @@ export class UserConsumer extends WorkerHost {
     super();
   }
 
-  async process(job: Job, token?: string) {
+  async process(job: Job) {
     if (job.name === 'deactivate-users') await this.deactivateUsers();
   }
 
