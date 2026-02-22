@@ -49,15 +49,18 @@ git checkout development
 ```bash
 NODE_ENV=development
 JWT_SECRET=your-jwt-secret
-POSTGRES_HOST=localhost
+POSTGRES_HOST=postgres-auth
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your-postgres-password
 POSTGRES_DB=postgres
-REDIS_HOST=localhost
+REDIS_HOST=redis-auth
 REDIS_PORT=6379
 PORT=3000
 ```
+
+> Em containers, localhost aponta para o próprio container. Use o nome do serviço definido no docker-compose.yml (ex: postgres-auth, redis-auth).  
+> Para mais informações, confira a documentação oficial: https://docs.docker.com/compose/how-tos/networking/
 
 ### 4. Instale as dependências.
 ```bash
