@@ -1,6 +1,7 @@
 services:
   postgres-auth:
     image: postgres:18.1-alpine3.23
+    container_name: postgres-auth
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -12,5 +13,15 @@ services:
 
   redis-auth:
     image: redis:8.6.0-alpine
+    container_name: redis-auth
     ports:
       - 6379:6379
+
+  auth-backend:
+    build: .
+    container_name: auth-backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres-auth
+      - redis-auth
