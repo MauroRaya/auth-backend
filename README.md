@@ -59,8 +59,7 @@ REDIS_PORT=6379
 PORT=3000
 ```
 
-> Em containers, localhost aponta para o próprio container. Use o nome do serviço definido no docker-compose.yml (ex: postgres-auth, redis-auth).  
-> Para mais informações, confira a documentação oficial: https://docs.docker.com/compose/how-tos/networking/
+> Em containers, localhost aponta para o próprio container. Use o nome do serviço definido no docker-compose.yml (ex: postgres-auth, redis-auth). Para mais informações, confira a documentação oficial: https://docs.docker.com/compose/how-tos/networking/
 
 ### 4. Instale as dependências.
 ```bash
