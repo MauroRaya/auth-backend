@@ -16,12 +16,3 @@ services:
     container_name: redis-auth
     ports:
       - 6379:6379
-
-  auth-backend:
-    build: .
-    container_name: auth-backend
-    ports:
-      - 3000:3000
-    depends_on:
-      - postgres-auth
-      - redis-auth

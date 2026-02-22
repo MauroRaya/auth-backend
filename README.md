@@ -40,38 +40,49 @@ Esse repositório adota as especificações de:
 git clone https://github.com/MauroRaya/auth-backend
 ```
 
-### 2. Mude para a branch de desenvolvimento.
+### 2. Mude para o diretório do projeto.
+```bash
+cd auth-backend
+```
+
+### 3. Mude para a branch de desenvolvimento.
 ```bash
 git checkout development
 ```
 
-### 3. Configure o arquivo `.env` na raiz do projeto.
+### 4. Configure o arquivo `.env` na raiz do projeto.
 ```bash
 NODE_ENV=development
+
 JWT_SECRET=your-jwt-secret
-POSTGRES_HOST=localhost
+
+POSTGRES_HOST=postgres-auth
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=your-postgres-password
 POSTGRES_DB=postgres
-REDIS_HOST=localhost
+
+REDIS_HOST=redis-auth
 REDIS_PORT=6379
+
 PORT=3000
 ```
 
-### 4. Instale as dependências.
+> Em containers, localhost aponta para o próprio container. Use o nome do serviço definido no docker-compose.yml (ex: postgres-auth, redis-auth). Para mais informações, confira a documentação oficial: https://docs.docker.com/compose/how-tos/networking/
+
+### 5. Instale as dependências.
 ```bash
 npm install
 ```
 
-### 5. Suba o banco de dados localmente.
+### 6. Suba os serviços de infraestrutura necessários (ex: PostgreSQL, Redis).
 ```bash
-docker compose up -d
+docker compose -f docker-compose.dev.yml up -d
 ```
 
-> Não esqueça de executar `docker compose down` após finalizar a aplicação.
+> Não esqueça de executar `docker compose -f docker-compose.dev.yml down -v` após finalizar a aplicação.
 
-### 6. Inicie a aplicação.
+### 7. Inicie a aplicação.
 ```bash
 npm start
 ```
