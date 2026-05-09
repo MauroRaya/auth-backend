@@ -47,6 +47,34 @@ describe('AppController (e2e)', () => {
       .expect(201);
   });
 
+  it('sign up with invalid email expect status code 400', () => {
+    const data: SignUpDTO = {
+      email: 'johndoe',
+      password: 'johndoe123',
+    };
+
+    return request(app.getHttpServer())
+      .post('/auth/sign-up')
+      .send(data)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(400);
+  });
+
+  it('sign up using password with less than 8 characters expect status code 400', () => {
+    const data: SignUpDTO = {
+      email: 'johndoe@email.com',
+      password: '1234567',
+    };
+
+    return request(app.getHttpServer())
+      .post('/auth/sign-up')
+      .send(data)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(400);
+  });
+
   it('sign up with existing email expect conflict with status code 409', async () => {
     const data: SignUpDTO = {
       email: 'johndoe@email.com',
@@ -67,6 +95,34 @@ describe('AppController (e2e)', () => {
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(409);
+  });
+
+  it('sign in with incorrect password expect status code 401', async () => {
+    const signUpData: SignInDTO = {
+      email: 'johndoe@email.com',
+      password: 'johndoe123',
+    };
+
+    const signInData: SignInDTO = {
+      email: 'johndoe@email.com',
+      password: 'johndoe321',
+    };
+
+    const signUpResponse = await request(app.getHttpServer())
+      .post('/auth/sign-up')
+      .send(signUpData)
+      .set('Accept', 'application/json');
+
+    expect(signUpResponse.headers['content-type']).toMatch(/json/);
+    expect(signUpResponse.statusCode).toBe(201);
+
+    const signInResponse = await request(app.getHttpServer())
+      .post('/auth/sign-in')
+      .send(signInData)
+      .set('Accept', 'application/json');
+
+    expect(signInResponse.headers['content-type']).toMatch(/json/);
+    expect(signInResponse.statusCode).toBe(401);
   });
 
   it('sign in with valid email and password expect access token and status code 200', async () => {
