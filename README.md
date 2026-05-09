@@ -51,7 +51,7 @@ git checkout development
 ```
 
 ### 4. Configure o arquivo `.env` na raiz do projeto.
-```bash
+```env
 NODE_ENV=development
 
 JWT_SECRET=your-jwt-secret
@@ -68,7 +68,24 @@ REDIS_PORT=6379
 PORT=3000
 ```
 
-> Em containers, localhost aponta para o próprio container. Use o nome do serviço definido no docker-compose.yml (ex: postgres-auth, redis-auth). Para mais informações, confira a documentação oficial: https://docs.docker.com/compose/how-tos/networking/
+> [!IMPORTANT]  
+> Não use `localhost` para comunicação entre contêineres.  
+> Utilize o nome do container definido no arquivo `docker-compose.yml`.
+>
+> ❌ Incorreto
+> ```env
+> POSTGRES_HOST=localhost
+> REDIS_HOST=localhost
+> ```
+>
+> ✅ Correto
+> ```env
+> POSTGRES_HOST=postgres-auth
+> REDIS_HOST=redis-auth
+> ```
+>
+> Dessa forma, o contêiner da aplicação consegue encontrar os contêineres do Postgres e do Redis.  
+> Para mais informações, confira a documentação oficial do Docker: https://docs.docker.com/compose/how-tos/networking/
 
 ### 5. Instale as dependências.
 ```bash
@@ -80,6 +97,7 @@ npm install
 docker compose -f docker-compose.dev.yml up -d
 ```
 
+> [!IMPORTANT]  
 > Não esqueça de executar `docker compose -f docker-compose.dev.yml down -v` após finalizar a aplicação.
 
 ### 7. Inicie a aplicação.
