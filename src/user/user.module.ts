@@ -3,7 +3,7 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { BullModule } from '@nestjs/bullmq';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { TypeOrmUserRepository } from 'src/database/repositories/typeorm-user.repository';
+import { TypeOrmUserRepository } from '../database/repositories/typeorm-user.repository';
 import { UserConsumer } from './user.consumer';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
