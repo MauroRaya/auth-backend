@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from 'src/user/user.repository';
-import { Repository } from 'typeorm';
-import { User } from 'src/user/user.entity';
+import { UserRepository } from '../../user/user.repository';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { User } from '../../user/user.entity';
 
 @Injectable()
 export class TypeOrmUserRepository implements UserRepository {
@@ -11,11 +11,15 @@ export class TypeOrmUserRepository implements UserRepository {
     return await this.repository.findOneBy({ email });
   }
 
-  async updateAll(user: Partial<User>) {
-    await this.repository.updateAll(user);
+  async updateAll(user: Partial<User>): Promise<UpdateResult> {
+    return await this.repository.updateAll(user);
   }
 
   async save(user: Partial<User>): Promise<User> {
     return await this.repository.save(user);
+  }
+
+  async deleteAll(): Promise<DeleteResult> {
+    return await this.repository.deleteAll();
   }
 }

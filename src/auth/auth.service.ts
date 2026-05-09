@@ -4,8 +4,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import type { UserRepository } from 'src/user/user.repository';
+import type { UserRepository } from '../user/user.repository';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../user/user.entity';
+import { AccessTokenDTO } from './dto/access-token.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -16,7 +18,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string): Promise<User> {
     const user = await this.usersRepository.findOneByEmail(email);
     if (user) {
       throw new ConflictException('Email already in use');
@@ -28,7 +30,7 @@ export class AuthService {
     return await this.usersRepository.save({ email, salt, hash });
   }
 
-  async signIn(email: string, password: string) {
+  async signIn(email: string, password: string): Promise<AccessTokenDTO> {
     const user = await this.usersRepository.findOneByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
@@ -40,9 +42,8 @@ export class AuthService {
     }
 
     const payload = { sub: user.id };
+    const accessToken = await this.jwtService.signAsync(payload);
 
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    return { access_token: accessToken };
   }
 }

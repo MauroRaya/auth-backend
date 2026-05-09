@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/user/user.entity';
+import { User } from '../user/user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { EnvService } from 'src/env/env.service';
+import { EnvService } from '../env/env.service';
 import { AuthController } from './auth.controller';
 import { Repository } from 'typeorm';
-import { TypeOrmUserRepository } from 'src/database/repositories/typeorm-user.repository';
+import { TypeOrmUserRepository } from '../database/repositories/typeorm-user.repository';
 import { AuthService } from './auth.service';
 
 @Module({

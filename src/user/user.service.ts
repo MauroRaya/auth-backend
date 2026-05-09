@@ -20,4 +20,8 @@ export class UserService {
   async queueDeactivateUsers() {
     await this.userQueue.add('deactivate-users', {});
   }
+
+  async deleteAll() {
+    await this.usersRepository.deleteAll();
+  }
 }
