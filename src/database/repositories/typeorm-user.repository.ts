@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/user/user.repository';
-import { Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { User } from 'src/user/user.entity';
 
 @Injectable()
@@ -17,5 +17,9 @@ export class TypeOrmUserRepository implements UserRepository {
 
   async save(user: Partial<User>): Promise<User> {
     return await this.repository.save(user);
+  }
+
+  async deleteAll(): Promise<DeleteResult> {
+    return await this.repository.deleteAll();
   }
 }
